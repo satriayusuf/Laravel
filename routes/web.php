@@ -16,4 +16,12 @@ Route::get('/', function () {
 });
 
 Route::get('/pengguna', 'PenggunaController@index');
+
+Route::get('/pengguna/tambah', 'PenggunaController@tambah');
+
+Route::post('pengguna/store', 'PenggunaController@store');
+
+Route::get('/pengguna/edit/{id}', 'PenggunaController@edit');
+
+Route::put('/pengguna/update/{id}', 'PenggunaController@update');
 Route::get('/pengguna/hapus/{id}', 'PenggunaController@delete');

@@ -37,14 +37,15 @@
                             <td>{{ $p->created_at }}</td>
                             <td>
                                 <a href="/pengguna/hapus/{{ $p->id }}" class="btn btn-danger">Hapus</a>
+                    <a href="/pengguna/edit/{{ $p->id }}">Ubah</a>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
-        </div>
     </div>
+        </div>
 </body>
 
 </html>
