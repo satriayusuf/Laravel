@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/pengguna', 'PenggunaController@index');
+Route::get('/pengguna/hapus/{id}', 'PenggunaController@delete');
