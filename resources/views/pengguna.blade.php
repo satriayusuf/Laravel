@@ -14,7 +14,11 @@
             <div class="card-header text-center">
                 <h3>CRUD Data PKL</h3>
             </div>
-
+             <form action="/pengguna" method="GET" class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="text" name="cari" placeholder="Cari Pegawai .."
+                value="{{ old('cari') }}">
+            <input type="submit" value="CARI" class="btn btn-outline-success my-2 my-sm-0">
+        </form>
             <div class="card-body">
                 <table class="table table-bordered table-hover table-striped">
                     <thead>
@@ -37,7 +41,7 @@
                             <td>{{ $p->created_at }}</td>
                             <td>
                                 <a href="/pengguna/hapus/{{ $p->id }}" class="btn btn-danger">Hapus</a>
-                    <a href="/pengguna/edit/{{ $p->id }}">Ubah</a>
+                                <a href="/pengguna/edit/{{ $p->id }}">Ubah</a>
                             </td>
                         </tr>
                         @endforeach
@@ -49,8 +53,4 @@
 </body>
 
 </html>
-        <form action="/pengguna/cari" method="GET" class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" name="cari" placeholder="Cari Pegawai .."
-                value="{{ old('cari') }}">
-            <input type="submit" value="CARI" class="btn btn-outline-success my-2 my-sm-0">
-        </form>
+       

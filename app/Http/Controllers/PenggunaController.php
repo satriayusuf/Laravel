@@ -6,9 +6,19 @@ use Illuminate\Http\Request;
 use App\Pengguna;
 
 class PenggunaController extends Controller
-{
-        $pengguna = Pengguna::all();
-        return view('pengguna', ['pengguna' => $pengguna]);
+{   public function index(Request $request){
+        
+        if($request->has('cari')){
+            $pengguna = pengguna::where('nama', 'Like', "%{$request->cari}%")
+                                  ->orWhere('alamat', 'Like' ,"%{$request->cari}%")
+                                  ->orWhere('email', 'Like', "%{$request->cari}%")
+                                  ->get();
+            // return view('pengguna',['pengguna' => $pengguna]); 
+        }else{
+            $pengguna = Pengguna::all();
+        }
+        
+         return view('pengguna', ['pengguna' => $pengguna]);
     }
 
     public function tambah() {
@@ -61,18 +71,19 @@ class PenggunaController extends Controller
     	$pengguna->delete();
     	return redirect('/pengguna');
     }
+    //  public function cari(Request $request)
+    // {
+	//     $cari = $request->cari;
+
+	//     $pengguna = DB::table('pengguna')
+    //                 ->where('nama', 'Like', "%{$request->cari}%")
+    //                 ->orWhere('alamat', 'Like' ,"%{$request->cari}%")
+    //                 ->orWhere('email', 'Like', "%{$request->cari}%")
+	//                 ->get();
+
+	//     return view('pengguna',['pengguna' => $pengguna]);  
+
+    // }
 }
 
-     public function cari(Request $request)
-    {
-	    $cari = $request->cari;
-
-	    $pengguna = DB::table('pengguna')
-                    ->where('nama', 'Like', "%{$request->cari}%")
-                    ->orWhere('alamat', 'Like' ,"%{$request->cari}%")
-                    ->orWhere('email', 'Like', "%{$request->cari}%")
-	                ->get();
-
-	    return view('pengguna',['pengguna' => $pengguna]);  
-
-    }
+    
