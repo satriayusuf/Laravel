@@ -9,18 +9,31 @@ class PenggunaController extends Controller
 {  
     public function index(Request $request){
         
+        // if($request->has('cari')){
+        //     $pengguna = pengguna::where('nama', 'Like', "%{$request->cari}%")
+        //                           ->orWhere('alamat', 'Like' ,"%{$request->cari}%")
+        //                           ->orWhere('email', 'Like', "%{$request->cari}%")
+        //                           ->get();
+        // }
+        // else {
+        //     $pengguna = Pengguna::all();
+        // }
+        $pengguna = Pengguna::all();
+         return view('pengguna', ['pengguna' => $pengguna]);
+    }
+
+    public function cari(Request $request){
+        
         if($request->has('cari')){
             $pengguna = pengguna::where('nama', 'Like', "%{$request->cari}%")
                                   ->orWhere('alamat', 'Like' ,"%{$request->cari}%")
                                   ->orWhere('email', 'Like', "%{$request->cari}%")
                                   ->get();
-            // return view('pengguna',['pengguna' => $pengguna]); 
         }
         else {
             $pengguna = Pengguna::all();
         }
-        
-         return view('pengguna', ['pengguna' => $pengguna]);
+        return view('pengguna', ['pengguna' => $pengguna]);
     }
 
     public function tambah() {
@@ -33,7 +46,8 @@ class PenggunaController extends Controller
             'required' => 'Harap isi bidang ini',
             'min' => 'Bidang ini membutuhkan setidaknya :min karakter',
             'max' => 'Bidang ini tidak boleh melebihi :max karakter',
-            'numeric' => 'Bidang ini harus berisi angka'
+            'numeric' => 'Bidang ini harus berisi angka',
+            //'alpha' => 'Bidang ini harus berisi huruf'
         ];
 
         $this->validate($request,[
@@ -50,7 +64,14 @@ class PenggunaController extends Controller
             'alamat' => $request->alamat
         ]);
 
-        return redirect('/pengguna');
+        return redirect('/pengguna')->with('simpan', '
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Data berhasil di simpan!!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        ');
     }
 
     public function edit($id) {
@@ -64,7 +85,8 @@ class PenggunaController extends Controller
             'required' => 'Harap isi bidang ini',
             'min' => 'Bidang ini membutuhkan setidaknya :min karakter',
             'max' => 'Bidang ini tidak boleh melebihi :max karakter',
-            'numeric' => 'Bidang ini harus berisi angka'
+            'numeric' => 'Bidang ini harus berisi angka',
+            //'alpha' => 'Bidang ini harus berisi huruf'
         ];
 
         $this->validate($request, [
@@ -80,13 +102,27 @@ class PenggunaController extends Controller
         $pengguna->alamat = $request->alamat;
         $pengguna->email = $request->email;
         $pengguna->save();
-        return redirect('/pengguna');
+        return redirect('/pengguna')->with('ubah', '
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Data berhasil di ubah!!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        ');
     }
 
     public function delete($id)
     {
     	$pengguna = Pengguna::find($id);
-    	$pengguna->delete();
-    	return redirect('/pengguna');
+        $pengguna->delete();
+        return redirect('/pengguna')->with('hapus','
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Data berhasil di hapus!!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        ');
     }
 }

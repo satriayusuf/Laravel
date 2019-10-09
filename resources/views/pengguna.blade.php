@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{asset('css/app.css')}}" rel="stylesheet">
     <title>Pengguna</title>
+
+    <style>
+        p {
+            float: right;
+        }
+
+        .message-success {
+            float: right;
+        }
+    </style>
 </head>
 
 <body>
@@ -14,20 +24,51 @@
             <div class="col-11">
                 <div class="card mt-5">
                     <div class="card-header text-center">
-                        <h3>CRUD Data PKL</h3>
+                        <h3>Data Pengguna</h3>
                     </div>
                     <div class="card-body">
-                        <form action="/pengguna" method="GET" class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="text" name="cari" placeholder="Cari Pegawai .."
+                        <form action="/pengguna/cari" method="GET" class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-2" type="text" name="cari" placeholder="Cari Pengguna ...."
                                 value="{{ old('cari') }}">
                             <input type="submit" value="CARI" class="btn btn-outline-success my-2 my-sm-0">
                         </form>
+                        <p>
+                            <?php if(Session::has('hapus')): ?>
+                            <div class="message message-success">
+                                <span class="close"></span>
+                                <?php echo Session::get('hapus') ?>
+                            </div>
+                            <?php endif; ?>
+
+                            <?php if(Session::has('simpan')): ?>
+                            <div class="message message-success">
+                                <span class="close"></span>
+                                <?php echo Session::get('simpan') ?>
+                            </div>
+                            <?php endif; ?>
+
+                            <?php if(Session::has('ubah')): ?>
+                            <div class="message message-success">
+                                <span class="close"></span>
+                                <?php echo Session::get('ubah') ?>
+                            </div>
+                            <?php endif; ?>
+
+                            <?php if(Session::has('not_found')): ?>
+                            <div class="message message-success">
+                                <span class="close"></span>
+                                <?php echo Session::get('not_found') ?>
+                            </div>
+                            <?php endif; ?>
+
+                        </p>
                         <br>
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Nama</th>
-                                    <th>No telepon</th>
+                                    <th>No Telepon</th>
                                     <th>Email</th>
                                     <th>Alamat</th>
                                     <th>Tanggal dibuat</th>
@@ -37,6 +78,7 @@
                             <tbody>
                                 @foreach($pengguna as $p)
                                 <tr>
+                                    <td>{{ $p->id }}</td>
                                     <td>{{ $p->nama }}</td>
                                     <td>{{ $p->no_telepon }}</td>
                                     <td>{{ $p->email }}</td>
@@ -58,6 +100,8 @@
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('js/app.js') }}"></script>
 
 </body>
 
