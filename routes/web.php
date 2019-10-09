@@ -24,5 +24,9 @@ Route::post('pengguna/store', 'PenggunaController@store');
 Route::get('/pengguna/edit/{id}', 'PenggunaController@edit');
 
 Route::put('/pengguna/update/{id}', 'PenggunaController@update');
+
 Route::get('/pengguna/hapus/{id}', 'PenggunaController@delete');
+
 Route::get('/pengguna/cari', 'PenggunaController@cari');
+
+Route::get('/pengguna/hapus/{id}', 'PenggunaController@delete');

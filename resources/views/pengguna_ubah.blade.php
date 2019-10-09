@@ -67,7 +67,8 @@
 
                                 <div class="form-group">
                                     <label for="">Email</label>
-                                    <input type="text" name="email" class="form-control" value="{{ $pengguna->email }}">
+                                    <input type="email" name="email" class="form-control"
+                                        value="{{ $pengguna->email }}">
 
                                     @if($errors->has('email'))
                                     <div class="text-danger">

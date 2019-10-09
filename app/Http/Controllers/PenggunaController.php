@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Pengguna;
 
 class PenggunaController extends Controller
-{   public function index(Request $request){
+{  
+    public function index(Request $request){
         
         if($request->has('cari')){
             $pengguna = pengguna::where('nama', 'Like', "%{$request->cari}%")
@@ -14,7 +15,8 @@ class PenggunaController extends Controller
                                   ->orWhere('email', 'Like', "%{$request->cari}%")
                                   ->get();
             // return view('pengguna',['pengguna' => $pengguna]); 
-        }else{
+        }
+        else {
             $pengguna = Pengguna::all();
         }
         
@@ -26,12 +28,20 @@ class PenggunaController extends Controller
     }
 
     public function store(Request $request) {
+
+        $message = [
+            'required' => 'Harap isi bidang ini',
+            'min' => 'Bidang ini membutuhkan setidaknya :min karakter',
+            'max' => 'Bidang ini tidak boleh melebihi :max karakter',
+            'numeric' => 'Bidang ini harus berisi angka'
+        ];
+
         $this->validate($request,[
             'nama' => 'required|min:5|max:255',
-            'no_telepon' => 'required|min:12|max:25',
+            'no_telepon' => 'required|numeric|min:8',
             'email' => 'required|max:50',
             'alamat' => 'required|max:250'
-        ]);
+        ],$message);
 
         Pengguna::create([
             'nama' => $request->nama,
@@ -49,12 +59,20 @@ class PenggunaController extends Controller
     }
 
     public function update($id, Request $request) {
+
+        $message = [
+            'required' => 'Harap isi bidang ini',
+            'min' => 'Bidang ini membutuhkan setidaknya :min karakter',
+            'max' => 'Bidang ini tidak boleh melebihi :max karakter',
+            'numeric' => 'Bidang ini harus berisi angka'
+        ];
+
         $this->validate($request, [
-            'nama' => 'required',
-            'no_telepon' => 'required',
-            'alamat' => 'required',
-            'email' => 'required'
-        ]);
+            'nama' => 'required|min:5|max:255',
+            'no_telepon' => 'required|numeric|min:8',
+            'alamat' => 'required|max:50',
+            'email' => 'required|max:250'
+        ],$message);
 
         $pengguna = Pengguna::find($id);
         $pengguna->nama = $request->nama;
@@ -71,19 +89,4 @@ class PenggunaController extends Controller
     	$pengguna->delete();
     	return redirect('/pengguna');
     }
-    //  public function cari(Request $request)
-    // {
-	//     $cari = $request->cari;
-
-	//     $pengguna = DB::table('pengguna')
-    //                 ->where('nama', 'Like', "%{$request->cari}%")
-    //                 ->orWhere('alamat', 'Like' ,"%{$request->cari}%")
-    //                 ->orWhere('email', 'Like', "%{$request->cari}%")
-	//                 ->get();
-
-	//     return view('pengguna',['pengguna' => $pengguna]);  
-
-    // }
 }
-
-    
