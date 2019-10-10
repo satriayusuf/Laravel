@@ -11,7 +11,9 @@ class Pengguna extends Model
 
     protected $fillable = ['id', 'nama', 'no_telepon', 'email', 'alamat' ];
 
-    use Sortable;
-
-    public $sortable = ['id', 'nama', 'no_telepon', 'email', 'alamat', 'created_at', 'updated_at'];
+    public function sortir() {
+        $pengguna = DB::table('pengguna')
+            ->orderBy('created_at', 'DESC')
+            ->get();
+    }
 }

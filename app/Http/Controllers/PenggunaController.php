@@ -7,17 +7,9 @@ use App\Pengguna;
 
 class PenggunaController extends Controller
 {  
+
     public function index(Request $request){
-        
-        // if($request->has('cari')){
-        //     $pengguna = pengguna::where('nama', 'Like', "%{$request->cari}%")
-        //                           ->orWhere('alamat', 'Like' ,"%{$request->cari}%")
-        //                           ->orWhere('email', 'Like', "%{$request->cari}%")
-        //                           ->get();
-        // }
-        // else {
-        //     $pengguna = Pengguna::all();
-        // }
+
         $pengguna = Pengguna::all();
          return view('pengguna', ['pengguna' => $pengguna]);
     }
@@ -30,10 +22,7 @@ class PenggunaController extends Controller
                                   ->orWhere('email', 'Like', "%{$request->cari}%")
                                   ->get();
         }
-        else {
-            $pengguna = Pengguna::all();
-        }
-        return view('pengguna', ['pengguna' => $pengguna]);
+            return view('pengguna', ['pengguna' => $pengguna]);
     }
 
     public function tambah() {
@@ -51,7 +40,7 @@ class PenggunaController extends Controller
         ];
 
         $this->validate($request,[
-            'nama' => 'required|min:5|max:255',
+            'nama' => 'required|min:2|max:255',
             'no_telepon' => 'required|numeric|min:8',
             'email' => 'required|max:50',
             'alamat' => 'required|max:250'
@@ -90,7 +79,7 @@ class PenggunaController extends Controller
         ];
 
         $this->validate($request, [
-            'nama' => 'required|min:5|max:255',
+            'nama' => 'required|min:2|max:255',
             'no_telepon' => 'required|numeric|min:8',
             'alamat' => 'required|max:50',
             'email' => 'required|max:250'

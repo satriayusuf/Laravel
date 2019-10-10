@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{asset('css/app.css')}}" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
     <title>Pengguna</title>
 
     <style>
@@ -21,7 +23,7 @@
 <body>
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-11">
+            <div class="col-12">
                 <div class="card mt-5">
                     <div class="card-header text-center">
                         <h3>Data Pengguna</h3>
@@ -30,7 +32,9 @@
                         <form action="/pengguna/cari" method="GET" class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="text" name="cari" placeholder="Cari Pengguna ...."
                                 value="{{ old('cari') }}">
-                            <input type="submit" value="CARI" class="btn btn-outline-success my-2 my-sm-0">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
                         </form>
                         <p>
                             <?php if(Session::has('hapus')): ?>
@@ -65,26 +69,33 @@
                         <br>
                         <table class="table table-bordered table-hover">
                             <thead>
-                                <tr>
+                                <tr class="text-center">
                                     <th>No</th>
                                     <th>Nama</th>
                                     <th>No Telepon</th>
                                     <th>Email</th>
                                     <th>Alamat</th>
-                                    <th>Tanggal dibuat</th>
+                                    <th> Tanggal dibuat
+                                        <button class="btn">
+                                            <i class="fa fa-sort" aria-hidden="true"></i>
+                                            <?php
+                                                
+                                            ?>
+                                        </button>
+                                    </th>
                                     <th>OPSI</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($pengguna as $p)
+                                @foreach($pengguna as $key => $p)
                                 <tr>
-                                    <td>{{ $p->id }}</td>
+                                    <td class="text-center">{{ $key + 1 }}</td>
                                     <td>{{ $p->nama }}</td>
                                     <td>{{ $p->no_telepon }}</td>
                                     <td>{{ $p->email }}</td>
                                     <td>{{ $p->alamat }}</td>
                                     <td>{{ $p->created_at }}</td>
-                                    <td>
+                                    <td class="text-center">
                                         <a href="/pengguna/edit/{{ $p->id }}" class="btn btn-warning">Ubah</a>
                                         <a href="/pengguna/hapus/{{ $p->id }}"
                                             onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
@@ -92,9 +103,15 @@
                                     </td>
                                 </tr>
                                 @endforeach
+
+                                @if(count($pengguna) == 0)
+                                <tr class="text-center">
+                                    <H1><td colspan="7">Data Tidak Ditemukan</td></H1>
+                                </tr>
+                                @endif
                             </tbody>
                         </table>
-                        <a href="/pengguna/tambah" class="btn btn-primary">Tambah Pengguna Baru</a>
+                        <a href="/pengguna/tambah" class="btn btn-primary"><i class="fa fa-plus-square-o" aria-hidden="true"></i>&nbsp; Tambah Pengguna</a>
                     </div>
                 </div>
             </div>
